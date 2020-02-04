@@ -58,6 +58,7 @@ export default class Siema {
       rtl: false,
       onInit: () => {},
       onChange: () => {},
+      bubbleEventOn: element => { return ['TEXTAREA', 'OPTION', 'INPUT', 'SELECT'].indexOf(element.nodeName) !== -1; }
     };
 
     const userSttings = options;
@@ -227,7 +228,6 @@ export default class Siema {
       }
     }
   }
-
 
   /**
    * Go to previous slide.
@@ -435,13 +435,12 @@ export default class Siema {
     };
   }
 
-
   /**
    * touchstart event handler
    */
   touchstartHandler(e) {
     // Prevent dragging / swiping on inputs, selects and textareas
-    const ignoreSiema = ['TEXTAREA', 'OPTION', 'INPUT', 'SELECT'].indexOf(e.target.nodeName) !== -1;
+    const ignoreSiema = this.config.bubbleEventOn(e.target);
     if (ignoreSiema) {
       return;
     }
@@ -491,13 +490,12 @@ export default class Siema {
     }
   }
 
-
   /**
    * mousedown event handler
    */
   mousedownHandler(e) {
     // Prevent dragging / swiping on inputs, selects and textareas
-    const ignoreSiema = ['TEXTAREA', 'OPTION', 'INPUT', 'SELECT'].indexOf(e.target.nodeName) !== -1;
+    const ignoreSiema = this.config.bubbleEventOn(e.target);
     if (ignoreSiema) {
       return;
     }
